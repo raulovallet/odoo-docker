@@ -75,6 +75,22 @@ RUN chown odoo /etc/odoo/odoo.conf \
     && chown -R odoo /mnt/extra-addons
 VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 
+# Repositories
+RUN git clone -b 16.0 git@github.com:raulovallet/l10n-dominicana-pro.git /mnt/extra-addons/l10n-dominicana-pro
+RUN git clone -b 16.0 git@github.com:OCA/social.git /mnt/extra-addons/social
+RUN git clone -b 16.0 git@github.com:OCA/web.git /mnt/extra-addons/web
+RUN git clone -b 16.0 git@github.com:OCA/website.git /mnt/extra-addons/website
+RUN git clone -b 16.0 git@github.com:GuavanaUX/l10n_do_hr_payroll.git /mnt/extra-addons/l10n_do_hr_payroll
+RUN git clone -b 16.0 git@github.com:GuavanaUX/buy_addons.git /mnt/extra-addons/buy_addons
+
+# Install reqirements
+RUN if [ -f "/mnt/extra-addons/l10n-dominicana-pro/requirements.txt" ]; then pip3 install -r /mnt/extra-addons/l10n-dominicana-pro/requirements.txt; fi
+RUN if [ -f "/mnt/extra-addons/social/requirements.txt" ]; then pip3 install -r /mnt/extra-addons/social/requirements.txt; fi
+RUN if [ -f "/mnt/extra-addons/web/requirements.txt" ]; then pip3 install -r /mnt/extra-addons/web/requirements.txt; fi
+RUN if [ -f "/mnt/extra-addons/website/requirements.txt" ]; then pip3 install -r /mnt/extra-addons/website/requirements.txt; fi
+RUN if [ -f "/mnt/extra-addons/l10n_do_hr_payroll/requirements.txt" ]; then pip3 install -r /mnt/extra-addons/l10n_do_hr_payroll/requirements.txt; fi
+RUN if [ -f "/mnt/extra-addons/buy_addons/requirements.txt" ]; then pip3 install -r /mnt/extra-addons/buy_addons/requirements.txt; fi
+
 # Expose Odoo services
 EXPOSE 8069 8071 8072
 
