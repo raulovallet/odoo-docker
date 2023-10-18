@@ -76,13 +76,22 @@ RUN chown odoo /etc/odoo/odoo.conf \
     && chown -R odoo /mnt/extra-addons
 VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 
+#Custom addons directires:
+RUN mkdir -p /mnt/extra-addons/l10n-dominicana-pro \
+    mkdir -p /mnt/extra-addons/social \
+    mkdir -p /mnt/extra-addons/web \
+    mkdir -p /mnt/extra-addons/website \
+    mkdir -p /mnt/extra-addons/l10n_do_hr_payroll \
+    mkdir -p /mnt/extra-addons/buy_addons
+
 # Repositories
-RUN git clone -b 16.0 git@github.com:raulovallet/l10n-dominicana-pro.git /mnt/extra-addons/l10n-dominicana-pro
-RUN git clone -b 16.0 git@github.com:OCA/social.git /mnt/extra-addons/social
-RUN git clone -b 16.0 git@github.com:OCA/web.git /mnt/extra-addons/web
-RUN git clone -b 16.0 git@github.com:OCA/website.git /mnt/extra-addons/website
-RUN git clone -b 16.0 git@github.com:GuavanaUX/l10n_do_hr_payroll.git /mnt/extra-addons/l10n_do_hr_payroll
-RUN git clone -b 16.0 git@github.com:GuavanaUX/buy_addons.git /mnt/extra-addons/buy_addons
+
+RUN git clone -b 16.0 --depth 1 git@github.com:raulovallet/l10n-dominicana-pro.git /mnt/extra-addons/l10n-dominicana-pro
+RUN git clone -b 16.0 --depth 1 git@github.com:OCA/social.git /mnt/extra-addons/social
+RUN git clone -b 16.0 --depth 1 git@github.com:OCA/web.git /mnt/extra-addons/web
+RUN git clone -b 16.0 --depth 1 git@github.com:OCA/website.git /mnt/extra-addons/website
+RUN git clone -b 16.0 --depth 1 git@github.com:GuavanaUX/l10n_do_hr_payroll.git /mnt/extra-addons/l10n_do_hr_payroll
+RUN git clone -b 16.0 --depth 1 git@github.com:GuavanaUX/buy_addons.git /mnt/extra-addons/buy_addons
 
 # Install reqirements
 RUN if [ -f "/mnt/extra-addons/l10n-dominicana-pro/requirements.txt" ]; then pip3 install -r /mnt/extra-addons/l10n-dominicana-pro/requirements.txt; fi
